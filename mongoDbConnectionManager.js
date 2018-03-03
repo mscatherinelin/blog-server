@@ -5,7 +5,7 @@ const assert = require('assert');
 // Connection URL
 const url = 'mongodb://localhost:27017';
 
-const dbName = 'test';
+const dbName = 'BlogServer';
 
 var _db;
 
@@ -17,7 +17,7 @@ module.exports = {
     } );
   },
   getDbClient: function() {
-    return _db.db('test');
+    return _db.db(dbName);
   },
   getPostsCollection: function()
   {
@@ -30,6 +30,10 @@ module.exports = {
   postsByUserName: function(username)
   {
     return module.exports.getPostsCollection().find({'username' : username}).toArray();
+  },
+  postByUserNameAndPostId: function(username, postId)
+  {
+    return module.exports.getPostsCollection().findOne({'username' : username, 'postid' : postId});
   }
 
 };
