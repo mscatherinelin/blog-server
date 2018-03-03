@@ -9,12 +9,9 @@ var bcrypt = require('bcrypt');
 var index = require('./routes/index');
 var users = require('./routes/users');
 var blog = require('./routes/blog');
-<<<<<<< HEAD
 var api = require('./routes/api');
 
-=======
 var login = require('./routes/login');
->>>>>>> origin/master
 var mongoDb = require("./mongoDbConnectionManager.js");
 
 var app = express();
@@ -39,11 +36,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', index);
 app.use('/users', users);
 app.use('/blog', blog);
-<<<<<<< HEAD
 app.use('/api', api);
-=======
 app.use('/login', login);
->>>>>>> origin/master
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
