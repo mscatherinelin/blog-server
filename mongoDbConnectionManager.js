@@ -18,5 +18,18 @@ module.exports = {
   },
   getDbClient: function() {
     return _db.db('test');
+  },
+  getPostsCollection: function()
+  {
+    return module.exports.getDbClient().collection('Posts');
+  },
+  getUsersCollection: function()
+  {
+    return module.exports.getDbClient().collection('Users');
+  },
+  postsByUserName: function(username)
+  {
+    return module.exports.getPostsCollection().find({'username' : username}).toArray();
   }
+
 };

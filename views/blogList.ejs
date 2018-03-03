@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link href="https://maxcdn.bootstrapcdn.com/bootswatch/4.0.0-beta.3/darkly/bootstrap.min.css" rel="stylesheet" integrity="sha384-novkfxI48G9YvcamVHf01KL+Sm6JFherxeJKqUdbez8EoEsAued2k/cD43lYG+B1"
+        crossorigin="anonymous">
+</head>
+
+<body>
+
+    <body>
+        <% for(let i = 0; i < data.length; i++) { %>
+            <div class="card">
+                <div class="card-header">
+                    <h2><%= data[i].title %></h2>
+                </div>
+                <div class="card-body">
+                    <div class="card-text"><%- data[i].body %></div>
+                </div>
+            </div>
+            <% } %>
+                <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n"
+                    crossorigin="anonymous"></script>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb"
+                    crossorigin="anonymous"></script>
+                <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js" integrity="sha384-a5N7Y/aK3qNeh15eJKGWxsqtnX/wWdSZSKp+81YjTmS15nvnvxKHuzaWwXHDli+4"
+                    crossorigin="anonymous"></script>
+    </body>
+</body>
+
+</html>
