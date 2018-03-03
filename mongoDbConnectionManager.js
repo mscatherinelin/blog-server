@@ -34,6 +34,13 @@ module.exports = {
   postByUserNameAndPostId: function(username, postId)
   {
     return module.exports.getPostsCollection().findOne({'username' : username, 'postid' : postId});
+  },
+  maxPostId: function()
+  {
+    return module.exports.getPostsCollection().find().sort({psotid:-1}).limit(1).toArray();
+  },
+  insertPost: function(post)
+  {
+    return module.exports.getPostsCollection().insertOne(post);
   }
-
 };
