@@ -38,6 +38,6 @@ module.exports = {
     return module.exports.getPostsCollection().insertOne(post);
   },
   getUsersPassword: function(username) {
-    return module.exports.getDbClient().collection('Users').findOne({ 'username': username }, { 'password': 1 });
+    return module.exports.getDbClient().collection('Users').findOne({ 'username': username });
   }
 };
