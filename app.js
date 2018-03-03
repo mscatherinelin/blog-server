@@ -9,7 +9,14 @@ var index = require('./routes/index');
 var users = require('./routes/users');
 var blog = require('./routes/blog');
 
+var mongoDb = require("./mongoDbConnectionManager.js");
+
 var app = express();
+
+// set up mongoDb
+mongoDb.connectToServer(function (err) {
+  console.log("Got Connection to server")
+});
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
