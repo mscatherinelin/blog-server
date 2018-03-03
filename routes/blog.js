@@ -34,7 +34,7 @@ router.get('/:username', function(req, res, next) {
   });
 
 router.get('/:username/:postid', function(req, res, next) {
-    console.log('username/postid');
+    //console.log('username/postid');
     db.postByUserNameAndPostId(req.params.username, parseInt(req.params.postid))
     .then(data =>
     {

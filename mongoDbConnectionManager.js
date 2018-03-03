@@ -42,5 +42,9 @@ module.exports = {
   insertPost: function(post)
   {
     return module.exports.getPostsCollection().insertOne(post);
+  },
+  //Get users
+  getUsersPassword: function(username){
+    return module.exports.getDbClient().collection('Users').find({'username':username}, { 'password':1 });
   }
 };
