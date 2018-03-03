@@ -23,6 +23,7 @@ router.get('/', function(req, res, next) {
         //else
          //   console.log('boo');
     //});
+    res.send(600);
 
 });
 

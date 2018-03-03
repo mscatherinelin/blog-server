@@ -10,41 +10,34 @@ const dbName = 'BlogServer';
 var _db;
 
 module.exports = {
-  connectToServer: function( callback ) {
-    MongoClient.connect( url , function( err, db ) {
+  connectToServer: function (callback) {
+    MongoClient.connect(url, function (err, db) {
       _db = db;
       return callback(err);
-    } );
+    });
   },
-  getDbClient: function() {
+  getDbClient: function () {
     return _db.db(dbName);
   },
-  getPostsCollection: function()
-  {
+  getPostsCollection: function () {
     return module.exports.getDbClient().collection('Posts');
   },
-  getUsersCollection: function()
-  {
+  getUsersCollection: function () {
     return module.exports.getDbClient().collection('Users');
   },
-  postsByUserName: function(username)
-  {
-    return module.exports.getPostsCollection().find({'username' : username}).toArray();
+  postsByUserName: function (username) {
+    return module.exports.getPostsCollection().find({ 'username': username }).toArray();
   },
-  postByUserNameAndPostId: function(username, postId)
-  {
-    return module.exports.getPostsCollection().findOne({'username' : username, 'postid' : postId});
+  postByUserNameAndPostId: function (username, postId) {
+    return module.exports.getPostsCollection().findOne({ 'username': username, 'postid': postId });
   },
-  maxPostId: function()
-  {
-    return module.exports.getPostsCollection().find().sort({psotid:-1}).limit(1).toArray();
+  maxPostId: function () {
+    return module.exports.getPostsCollection().find().sort({ psotid: -1 }).limit(1).toArray();
   },
-  insertPost: function(post)
-  {
+  insertPost: function (post) {
     return module.exports.getPostsCollection().insertOne(post);
   },
-  //Get users
-  getUsersPassword: function(username){
-    return module.exports.getDbClient().collection('Users').find({'username':username}, { 'password':1 });
+  getUsersPassword: function(username) {
+    return module.exports.getDbClient().collection('Users').findOne({ 'username': username }, { 'password': 1 });
   }
 };
