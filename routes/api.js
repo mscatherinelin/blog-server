@@ -35,8 +35,8 @@ router.get('/:username/:postid', function (req, res, next) {
 })
 router.post('/:username/:postid', function (req, res, next) {
     if (!req.params.username || !req.params.postid) {
-        console.log("GET api/username/postid: no username or postid supplied");
-        res.send(404);
+        console.log("POST api/username/postid: no username or postid supplied");
+        res.send(400);
         return;
     }
     db.postByUserNameAndPostId(req.params.username, parseInt(req.params.postid)).then(data => {
@@ -49,22 +49,73 @@ router.post('/:username/:postid', function (req, res, next) {
         if (!body || !body.title || !body.body) {
             console.log("POST api/username/postid: bad json");
             res.send(400);
+            return;
         }
-        db.maxPostId().then(val => {
-            var newPost =
-                {
-                    postid: parseInt(val) + 1,
-                    created: new Date().getTime(),
-                    modified: new Date().getTime(),
-                    title: body.title,
-                    body: body.body
-                };
-            db.insertPost(newPost).then(x => {
-                console.log("POST api/username/postid: created")
-                res.send(201);
-            });
+        var newPost =
+            {
+                postid: parseInt(req.params.postid),
+                created: new Date().getTime(),
+                modified: new Date().getTime(),
+                username: req.params.username,
+                title: body.title,
+                body: body.body
+            };
+        db.insertPost(newPost).then(x => {
+            console.log("POST api/username/postid: created")
+            res.send(201);
         });
     });
 })
+router.put('/:username/:postid', function (req, res, next) {
+    if (!req.params.username || !req.params.postid) {
+        console.log("PUT api/username/postid: no username or postid supplied");
+        res.send(400);
+        return;
+    }
+    db.postByUserNameAndPostId(req.params.username, parseInt(req.params.postid)).then(data => {
+        if (!data) {
+            console.log("PUT api/username/postid: post not found");
+            res.send(400);
+            return;
+        }
+        var body = req.body;
+        if (!body || !body.title || !body.body) {
+            console.log("PUT api/username/postid: bad json");
+            res.send(400);
+            return;
+        }
+        var newPost =
+            {
+                modified: new Date().getTime(),
+                title: body.title,
+                body: body.body
+            };
+        db.updatePost(data._id, newPost).then(x => {
+            console.log("PUT api/username/postid: updated");
+            res.send(200);
+        });
+    });
+})
+
+router.delete('/:username/:postid', function (req, res, next) {
+    if (!req.params.username || !req.params.postid) {
+        console.log("PUT api/username/postid: no username or postid supplied");
+        res.send(400);
+        return;
+    }
+    db.postByUserNameAndPostId(req.params.username, parseInt(req.params.postid)).then(data => {
+        if (!data) {
+            console.log("DELETE api/username/postid: post not found");
+            res.send(400);
+            return;
+        }
+        db.deletePost(data._id).then(x => {
+            console.log("DELETE api/username/postid: deleted");
+            res.send(200);
+        });
+    });
+})
+
+
 
 module.exports = router;

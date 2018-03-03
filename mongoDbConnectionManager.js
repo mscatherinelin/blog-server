@@ -32,12 +32,27 @@ module.exports = {
     return module.exports.getPostsCollection().findOne({ 'username': username, 'postid': postId });
   },
   maxPostId: function () {
-    return module.exports.getPostsCollection().find().sort({ psotid: -1 }).limit(1).toArray();
+    return module.exports.getPostsCollection().find().sort({ postid: -1 }).limit(1).toArray();
   },
   insertPost: function (post) {
     return module.exports.getPostsCollection().insertOne(post);
   },
-  getUsersPassword: function(username) {
+  updatePost: function (_id, post) {
+    return module.exports.getPostsCollection().updateOne({ _id: _id },
+      {
+        $set:
+          {
+            title: post.title,
+            body: post.body,
+            modified: post.modified
+          }
+      });
+  },
+  deletePost: function(_id)
+  {
+    return module.exports.getPostsCollection().deleteOne({_id: _id});
+  },
+  getUsersPassword: function (username) {
     return module.exports.getDbClient().collection('Users').findOne({ 'username': username }, { 'password': 1 });
   }
 };
