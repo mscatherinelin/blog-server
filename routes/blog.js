@@ -2,21 +2,21 @@ var express = require('express');
 var db = require('../mongoDbConnectionManager');
 var router = express.Router();
 
-router.get('/:username/:page?', function(req, res, next) {
+router.get('/:username/:start?', function(req, res, next) {
     console.log(req.params.username);
     var startIndex = 0;
-    if(req.params.page)
+    if(req.params.start)
     {
-        startIndex = req.params.page * 5;
+        startIndex = req.params.start;
     }
     db.postsByUserName(req.params.username)
     .then(data =>
     {
-        var sortedData = data.sort((a,b) => a.postid - b.postid).slice(startIndex, startIndex + 5);
+        var sortedData = data.sort((a,b) => a.postid - b.postid).filter(x => x.postid >= startIndex);
         res.render('blogList', 
         {
-            data: sortedData,
-            isNext: data.length >= startIndex + 5
+            data: sortedData.slice(0, 5),
+            isNext: sortedData.length > 5
         });
     })
   });

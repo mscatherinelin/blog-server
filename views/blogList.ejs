@@ -9,13 +9,18 @@
 <body>
 
     <body>
+        <br />
         <% for(let i = 0; i < data.length; i++) { %>
-            <div class="card">
+            <div class="card" style="max-width: 50rem;">
                 <div class="card-header">
-                    <h2><%= data[i].title %></h2>
+                    <h2>
+                        <%= data[i].title %>
+                    </h2>
                 </div>
                 <div class="card-body">
-                    <div class="card-text"><%- data[i].body %></div>
+                    <div class="card-text">
+                        <%- data[i].body %>
+                    </div>
                 </div>
             </div>
             <% } %>
