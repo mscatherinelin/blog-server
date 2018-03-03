@@ -34,6 +34,10 @@ module.exports = {
   postByUserNameAndPostId: function(username, postId)
   {
     return module.exports.getPostsCollection().findOne({'username' : username, 'postid' : postId});
+  },
+  //Get users
+  getUsersPassword: function(username){
+    return module.exports.getDbClient().collection('Users').find({'username':username}, { 'password':1 });
   }
 
 };
