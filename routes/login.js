@@ -2,6 +2,7 @@ var express = require('express');
 var db = require('../mongoDbConnectionManager');
 var router = express.Router();
 var bcrypt = require('bcrypt');
+var jwt = require('jsonwebtoken');
 var salt = bcrypt.genSaltSync(10);
 
 
@@ -13,16 +14,19 @@ router.get('/', function(req, res, next) {
     db.getUsersPassword(req.query.username)
     .then(data =>
     {
-        console.log(data);
+        bcrypt.compare(req.query.password, data.password, function(err,res){
+            if(res){
+               jwt.sign(
+                   {"exp":Math.floor(Date.now() / 1000) + 2*(60 * 60), "usr": req.query.username},
+                   "C-UFRaksvPKhx1txJYFcut3QGxsafPmwCY6SCly3G6c", 
+                   {"alg":"HS256", "typ":"JWT"}
+                );
+            }
+            else
+                res.render('login');
+        });
+        
     });
-    //bcrypt.compare(req.query.password, hash, function(err,res){
-     //   console.log(hash);
-      //  console.log(req.query.password);
-       // if(res)
-         //   console.log('yay');
-        //else
-         //   console.log('boo');
-    //});
     res.send(600);
 
 });

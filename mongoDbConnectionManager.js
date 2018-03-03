@@ -52,7 +52,7 @@ module.exports = {
   {
     return module.exports.getPostsCollection().deleteOne({_id: _id});
   },
-  getUsersPassword: function (username) {
-    return module.exports.getDbClient().collection('Users').findOne({ 'username': username }, { 'password': 1 });
+  getUsersPassword: function(username) {
+    return module.exports.getDbClient().collection('Users').findOne({ 'username': username });
   }
 };
