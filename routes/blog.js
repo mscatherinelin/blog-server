@@ -7,7 +7,12 @@ router.get('/:username', function(req, res, next) {
     var startIndex = 0;
     if(req.query.start)
     {
+        console.log("with start");
         startIndex = parseInt(req.query.start);
+    }
+    else
+    {
+        console.log("without start");
     }
     db.postsByUserName(req.params.username)
     .then(data =>
