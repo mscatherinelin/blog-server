@@ -11,6 +11,8 @@ router.get('/:username', function (req, res, next) {
         return;
     }
     else {
+        //SANITY: check that there is a header on this god damn cookie
+        console.log(jwt.decode(cookie.name, {complete: true}).header);
         jwt.verify(cookie.name, "C-UFRaksvPKhx1txJYFcut3QGxsafPmwCY6SCly3G6c", function (err, decoded) {
             if (err || decoded.usr != req.params.username)
                 res.sendStatus(401);
