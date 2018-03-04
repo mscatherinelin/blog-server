@@ -11,7 +11,6 @@ router.get('/', function (req, res, next) {
     if (req.query.redirect)
         redirect = req.query.redirect;
     if (!req.query.username || !req.query.password) {
-        console.log("missing!!");
         res.render('login', { redirect: redirect });
     }
     db.getUsersPassword(req.query.username)
@@ -20,7 +19,7 @@ router.get('/', function (req, res, next) {
                 if (result) {
                     var token = jwt.sign(
                         {
-                            "exp": Math.floor(Date.now() / 1000) + 2 * (60 * 60),
+                            "exp": Math.floor(Date.now() / 1000) + 30,// 2 * (60 * 60),
                             "usr": req.query.username
                         },
                         "C-UFRaksvPKhx1txJYFcut3QGxsafPmwCY6SCly3G6c",
@@ -32,7 +31,7 @@ router.get('/', function (req, res, next) {
                                 }
                         }
                     );
-                    console.log("In login success");
+                    console.log("Login Success...");
                     res.cookie('name', token);
                     if (req.query.redirect) {
                         res.redirect(req.query.redirect);
@@ -44,7 +43,7 @@ router.get('/', function (req, res, next) {
                     }
                 }
                 else {
-                    console.log('failed auth');
+                    console.log('Login failed...');
                     res.redirect('login?redirect=' + redirect);
                 }
             });
