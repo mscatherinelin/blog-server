@@ -3,7 +3,7 @@ var db = require('../mongoDbConnectionManager');
 var router = express.Router();
 var bcrypt = require('bcrypt');
 var jwt = require('jsonwebtoken');
-var salt = bcrypt.genSaltSync(10);
+//var salt = bcrypt.genSaltSync(10);
 
 
 router.get('/', function (req, res, next) {
