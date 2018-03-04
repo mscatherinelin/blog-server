@@ -39,7 +39,7 @@ router.get('/', function (req, res, next) {
                         return;
                     }
                     else {
-                        res.send(200);
+                        res.sendStatus(200);
                         return;
                     }
                 }
