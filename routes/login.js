@@ -16,6 +16,12 @@ router.get('/', function (req, res, next) {
     }
     db.getUsersPassword(req.query.username)
         .then(data => {
+            if(!data)
+            {
+                console.log('Login: couldn\'t find user');
+                res.redirect('login?redirect=' + redirect);
+                return;
+            }
             bcrypt.compare(req.query.password, data.password, function (err, result) {
                 if (result) {
                     var token = jwt.sign(
