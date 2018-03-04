@@ -20,9 +20,10 @@ router.get('/:username', function (req, res, next) {
     }
     else {
         jwt.verify(cookie.name, "C-UFRaksvPKhx1txJYFcut3QGxsafPmwCY6SCly3G6c", function (err, decoded) {
-            if (err)
-                res.sendStatus(500);
+            if (err || decoded.usr != req.params.username)
+                res.sendStatus(401);
             else {
+                console.log(decoded);
                 if (!req.params.username) {
                     console.log("GET api/username: no username supplied");
                     res.send(400);
