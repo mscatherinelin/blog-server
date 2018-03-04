@@ -1,19 +1,36 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-  </head>
-  <body>
-    <div class="card-body">
-        <div class="form-group">
-            <label>Username</label>
-            <input type="text" class="form-control"  placeholder="Username" />
-        </div>
-        <br>
-        <div class="form-group">
-                <label>Password</label>
-                <input type="text" class="form-control"  placeholder="Password" />
-        </div>
-    </div>
-  </body>
+
+<head>
+    <link href="https://maxcdn.bootstrapcdn.com/bootswatch/4.0.0-beta.3/darkly/bootstrap.min.css" rel="stylesheet" integrity="sha384-novkfxI48G9YvcamVHf01KL+Sm6JFherxeJKqUdbez8EoEsAued2k/cD43lYG+B1"
+    crossorigin="anonymous">
+</head>
+
+<body>
+  <div class="card-body">
+    <form method="get" action="/login">
+      <div class="form-group">
+        <label>Username</label>
+        <input name="username" type="text" class="form-control" placeholder="Username" />
+      </div>
+      <br>
+      <div class="form-group">
+        <label>Password</label>
+        <input name="password" type="text" class="form-control" placeholder="Password" />
+      </div>
+      <div class="form-group">
+        <input type="submit" class="btn btn-primary" value="Login" />
+      </div>
+    </form>
+  </div>
+
+
+  <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n"
+  crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb"
+  crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js" integrity="sha384-a5N7Y/aK3qNeh15eJKGWxsqtnX/wWdSZSKp+81YjTmS15nvnvxKHuzaWwXHDli+4"
+  crossorigin="anonymous"></script>
+</body>
+
 </html>
