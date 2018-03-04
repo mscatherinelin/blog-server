@@ -6,28 +6,31 @@ var jwt = require('jsonwebtoken');
 router.get('/:username', function (req, res, next) {
     var cookie = req.cookies;
     console.log(cookie.name);
-    if(!cookie)
-        res.status(401).send({message: "No token provided"});
-    else {
-        jwt.verify(cookie, "C-UFRaksvPKhx1txJYFcut3QGxsafPmwCY6SCly3G6c", function(err, decoded){
-            if(err)
-                res.status(500).send({message : "Failed to authenticate token."});
-            else
-                res.status(200).send(decoded)
-        });
-    }
-    if (!req.params.username) {
-        console.log("GET api/username: no username supplied");
-        res.send(400);
+    if (!cookie) {
+        res.sendStatus(401);
         return;
     }
-    db.postsByUserName(req.params.username).then(data => {
-        //remove the key from mongo
-        data.forEach(e => {
-            delete e._id;
+    else {
+        jwt.verify(cookie, "C-UFRaksvPKhx1txJYFcut3QGxsafPmwCY6SCly3G6c", function (err, decoded) {
+            if (err)
+                res.sendStatus(500);
+            else {
+                if (!req.params.username) {
+                    console.log("GET api/username: no username supplied");
+                    res.send(400);
+                    return;
+                }
+                db.postsByUserName(req.params.username).then(data => {
+                    //remove the key from mongo
+                    data.forEach(e => {
+                        delete e._id;
+                    });
+                    res.json(data);
+                })
+            }
         });
-        res.json(data);
-    })
+    }
+
 })
 router.get('/:username/:postid', function (req, res, next) {
     if (!req.params.username || !req.params.postid) {
