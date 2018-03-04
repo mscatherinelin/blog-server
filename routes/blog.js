@@ -1,4 +1,5 @@
 var express = require('express');
+var commonmark = require('commonmark');
 var db = require('../mongoDbConnectionManager');
 var router = express.Router();
 
@@ -19,6 +20,13 @@ router.get('/:username', function(req, res, next) {
     {
         //console.log(data);
         var sortedData = data.sort((a,b) => a.postid - b.postid).filter(x => x.postid >= startIndex);
+        sortedData.forEach(e => {
+            var reader = new commonmark.Parser();
+            var writer = new commonmark.HtmlRenderer();
+            var parsed = reader.parse(e.body);
+            e.body = writer.render(parsed);
+            //console.log(e.body);
+        });
         var nextPost = sortedData.slice(5, 5);
         var nextPostId = 0;
         if(nextPost != null)
@@ -38,6 +46,10 @@ router.get('/:username/:postid', function(req, res, next) {
     db.postByUserNameAndPostId(req.params.username, parseInt(req.params.postid))
     .then(data =>
     {
+        var reader = new commonmark.Parser();
+        var writer = new commonmark.HtmlRenderer();
+        var parsed = reader.parse(data.body);
+        data.body = writer.render(parsed);
         //console.log(data);
         res.render('blogSingle', 
         {
