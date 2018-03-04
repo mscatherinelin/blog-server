@@ -20,16 +20,12 @@ router.get('/', function(req, res, next) {
                    {"exp":Math.floor(Date.now() / 1000) + 2*(60 * 60), "usr": req.query.username},
                    "C-UFRaksvPKhx1txJYFcut3QGxsafPmwCY6SCly3G6c"
                 );
-                res.status(200).send({auth: true, token: token});
+                res.cookie('name', token);
             }
             else
                 res.render('login');
         });
-
-        
     });
-    res.send(600);
-
 });
 
 module.exports = router;
