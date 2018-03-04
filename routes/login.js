@@ -14,17 +14,18 @@ router.get('/', function(req, res, next) {
     db.getUsersPassword(req.query.username)
     .then(data =>
     {
-        bcrypt.compare(req.query.password, data.password, function(err,res){
-            if(res){
-               jwt.sign(
+        bcrypt.compare(req.query.password, data.password, function(err,result){
+            if(result){
+               var token = jwt.sign(
                    {"exp":Math.floor(Date.now() / 1000) + 2*(60 * 60), "usr": req.query.username},
-                   "C-UFRaksvPKhx1txJYFcut3QGxsafPmwCY6SCly3G6c", 
-                   {"alg":"HS256", "typ":"JWT"}
+                   "C-UFRaksvPKhx1txJYFcut3QGxsafPmwCY6SCly3G6c"
                 );
+                res.status(200).send({auth: true, token: token});
             }
             else
                 res.render('login');
         });
+
         
     });
     res.send(600);
