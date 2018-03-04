@@ -12,16 +12,25 @@ router.get('/', function (req, res, next) {
         redirect = req.query.redirect;
     if (!req.query.username || !req.query.password) {
         console.log("missing!!");
-        res.render('login', {redirect: redirect});
+        res.render('login', { redirect: redirect });
     }
-
     db.getUsersPassword(req.query.username)
         .then(data => {
             bcrypt.compare(req.query.password, data.password, function (err, result) {
                 if (result) {
                     var token = jwt.sign(
-                        { "exp": Math.floor(Date.now() / 1000) + 2 * (60 * 60), "usr": req.query.username },
-                        "C-UFRaksvPKhx1txJYFcut3QGxsafPmwCY6SCly3G6c"
+                        {
+                            "exp": Math.floor(Date.now() / 1000) + 2 * (60 * 60),
+                            "usr": req.query.username
+                        },
+                        "C-UFRaksvPKhx1txJYFcut3QGxsafPmwCY6SCly3G6c",
+                        {
+                            header:
+                                {
+                                    "alg": "HS256",
+                                    "typ": "JWT"
+                                }
+                        }
                     );
                     console.log("In login success");
                     res.cookie('name', token);
