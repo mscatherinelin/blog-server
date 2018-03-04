@@ -10,6 +10,7 @@ var index = require('./routes/index');
 var users = require('./routes/users');
 var blog = require('./routes/blog');
 var api = require('./routes/api');
+var edit = require('./routes/edit');
 
 var login = require('./routes/login');
 var mongoDb = require("./mongoDbConnectionManager.js");
@@ -31,10 +32,13 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+
 
 
 app.use('/', index);
+app.use('/edit', edit);
+app.use(express.static(path.join(__dirname, 'edit')));
+app.use(express.static(path.join(__dirname, 'public')));
 app.use('/users', users);
 app.use('/blog', blog);
 app.use('/api', api);
