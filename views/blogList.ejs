@@ -6,38 +6,45 @@
         crossorigin="anonymous">
 </head>
 
-<body>
 
-    <body>
-        <br />
-        <% for(let i = 0; i < data.length; i++) { %>
-            <div class="card" style="max-width: 50rem;">
-                <div class="card-header">
-                    <h2>
-                        <%= data[i].title %>
-                    </h2>
-                </div>
-                <div class="card-body">
-                    <div class="card-text">
-                        <%- data[i].body %>
-                    </div>
-                </div>
-                <div class="card-footer text-muted small">
-                    <p>
-                        <strong>PostId:</strong> <%= data[i].postid %> <br />
-                        <strong>CreatedDate:</strong> <%= new Date(data[i].created).toLocaleDateString() %><br />
-                        <strong>ModifiedDate:</strong>  <%= new Date(data[i].modified).toLocaleDateString() %>
-                    </p>
+<body class="small" style="padding-left: 10px;">
+    <% if(isNext) { %>
+        <a class="btn btn-primary btn-lg" id="next" style="margin-bottom: 10px;" href="<%= nextPostPathId %>" >Next Page</a>
+    <% } %>
+
+    <br />
+    <% for(let i = 0; i < data.length; i++) { %>
+        <div class="card small" style="max-width: 50rem; padding-top: 3px; padding-bottom:3px;">
+            <div class="card-header" style="padding-top:3px; padding-bottom:3px;">
+                <h3>
+                    <%= data[i].title %>
+                </h3>
+            </div>
+            <div class="card-body" style="padding-top:3px; padding-bottom:3px;">
+                <div class="card-text">
+                    <%- data[i].body %>
                 </div>
             </div>
-            <% } %>
-                <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n"
-                    crossorigin="anonymous"></script>
-                <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb"
-                    crossorigin="anonymous"></script>
-                <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js" integrity="sha384-a5N7Y/aK3qNeh15eJKGWxsqtnX/wWdSZSKp+81YjTmS15nvnvxKHuzaWwXHDli+4"
-                    crossorigin="anonymous"></script>
-    </body>
+            <div class="card-footer text-muted small">
+                <p style="margin-bottom: 0;">
+                    <strong>PostId:</strong>
+                    <%= data[i].postid %>
+                        <br />
+                        <strong>CreatedDate:</strong>
+                        <%= new Date(data[i].created).toLocaleDateString() %>
+                            <br />
+                            <strong>ModifiedDate:</strong>
+                            <%= new Date(data[i].modified).toLocaleDateString() %>
+                </p>
+            </div>
+        </div>
+        <% } %>
+            <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n"
+                crossorigin="anonymous"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb"
+                crossorigin="anonymous"></script>
+            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js" integrity="sha384-a5N7Y/aK3qNeh15eJKGWxsqtnX/wWdSZSKp+81YjTmS15nvnvxKHuzaWwXHDli+4"
+                crossorigin="anonymous"></script>
 </body>
 
 </html>

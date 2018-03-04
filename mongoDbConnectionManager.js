@@ -26,7 +26,7 @@ module.exports = {
     return module.exports.getDbClient().collection('Users');
   },
   postsByUserName: function (username) {
-    return module.exports.getPostsCollection().find({ 'username': username }).toArray();
+    return module.exports.getPostsCollection().find({ 'username': username }).sort({ postid: +1}).toArray();
   },
   postByUserNameAndPostId: function (username, postId) {
     return module.exports.getPostsCollection().findOne({ 'username': username, 'postid': postId });

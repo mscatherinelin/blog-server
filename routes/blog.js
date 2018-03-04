@@ -21,16 +21,17 @@ router.get('/:username', function (req, res, next) {
                 var parsed = reader.parse(e.body);
                 e.body = writer.render(parsed);
             });
-            var nextPost = sortedData.slice(5, 5);
+            var nextPost = sortedData.slice(5, 6);
             var nextPostId = 0;
-            if (nextPost != null)
-                nextPostId = nextPost.postid;
+            console.log(JSON.stringify(nextPost))
+            if (nextPost[0] != null)
+                nextPostId = nextPost[0].postid;
 
             res.render('blogList',
                 {
                     data: sortedData.slice(0, 5),
                     isNext: sortedData.length > 5,
-                    nextId: nextPostId
+                    nextPostPathId: '/blog/' + req.params.username + '?start=' + String(nextPostId)
                 });
         });
 })
