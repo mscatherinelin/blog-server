@@ -12,6 +12,7 @@ var authenticateUser = function (req, res, next, then) {
     var decodedCookie = jwt.decode(cookie, { complete: true });
     console.log('Cookie Header: ' + JSON.stringify(decodedCookie.header));
     console.log('Cookie Payload: ' + JSON.stringify(decodedCookie.payload));
+    //console.log('Now Seconds: ' +  Math.floor(new Date().getTime()/1000));
     jwt.verify(cookie, "C-UFRaksvPKhx1txJYFcut3QGxsafPmwCY6SCly3G6c", function (err, decoded) {
         if (err) {
             console.log('Error: ' + err);

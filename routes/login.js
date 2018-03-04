@@ -12,6 +12,7 @@ router.get('/', function (req, res, next) {
         redirect = req.query.redirect;
     if (!req.query.username || !req.query.password) {
         res.render('login', { redirect: redirect });
+        return;
     }
     db.getUsersPassword(req.query.username)
         .then(data => {
@@ -19,7 +20,7 @@ router.get('/', function (req, res, next) {
                 if (result) {
                     var token = jwt.sign(
                         {
-                            "exp": Math.floor(Date.now() / 1000) + 30,// 2 * (60 * 60),
+                            "exp": Math.floor(Date.now() / 1000) + 2 * (60 * 60),
                             "usr": req.query.username
                         },
                         "C-UFRaksvPKhx1txJYFcut3QGxsafPmwCY6SCly3G6c",
@@ -45,6 +46,7 @@ router.get('/', function (req, res, next) {
                 else {
                     console.log('Login failed...');
                     res.redirect('login?redirect=' + redirect);
+                    return;
                 }
             });
         });
