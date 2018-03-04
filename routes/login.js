@@ -7,10 +7,14 @@ var salt = bcrypt.genSaltSync(10);
 
 
 router.get('/', function (req, res, next) {
+    var redirect = "/";
+    if (req.query.redirect)
+        redirect = req.query.redirect;
     if (!req.query.username || !req.query.password) {
         console.log("missing!!");
-        res.render('login');
+        res.render('login', {redirect: redirect});
     }
+
     db.getUsersPassword(req.query.username)
         .then(data => {
             bcrypt.compare(req.query.password, data.password, function (err, result) {
@@ -32,7 +36,7 @@ router.get('/', function (req, res, next) {
                 }
                 else {
                     console.log('failed auth');
-                    res.render('login');
+                    res.redirect('login?redirect=' + redirect);
                 }
             });
         });
