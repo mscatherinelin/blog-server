@@ -1,8 +1,21 @@
 var express = require('express');
 var db = require('../mongoDbConnectionManager');
 var router = express.Router();
+var jwt = require('jsonwebtoken');
 
 router.get('/:username', function (req, res, next) {
+    var cookie = req.cookies;
+    console.log(cookie.name);
+    if(!cookie)
+        res.status(401).send({message: "No token provided"});
+    else {
+        jwt.verify(cookie, "C-UFRaksvPKhx1txJYFcut3QGxsafPmwCY6SCly3G6c", function(err, decoded){
+            if(err)
+                res.status(500).send({message : "Failed to authenticate token."});
+            else
+                res.status(200).send(decoded)
+        });
+    }
     if (!req.params.username) {
         console.log("GET api/username: no username supplied");
         res.send(400);

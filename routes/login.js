@@ -21,6 +21,7 @@ router.get('/', function(req, res, next) {
                    "C-UFRaksvPKhx1txJYFcut3QGxsafPmwCY6SCly3G6c"
                 );
                 res.cookie('name', token);
+                res.send('200');
             }
             else
                 res.render('login');
