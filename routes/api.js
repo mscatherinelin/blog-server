@@ -3,15 +3,23 @@ var db = require('../mongoDbConnectionManager');
 var router = express.Router();
 var jwt = require('jsonwebtoken');
 
+var expiration = function() {
+   var current_time = new Date().getTime() /1000;
+   if(current_time > jwt.exp) {
+       return false;
+   }
+   return true;
+
+}
 router.get('/:username', function (req, res, next) {
     var cookie = req.cookies;
     console.log(cookie.name);
-    if (!cookie) {
+    if (!cookie || !expiration()) {
         res.sendStatus(401);
         return;
     }
     else {
-        jwt.verify(cookie, "C-UFRaksvPKhx1txJYFcut3QGxsafPmwCY6SCly3G6c", function (err, decoded) {
+        jwt.verify(cookie.name, "C-UFRaksvPKhx1txJYFcut3QGxsafPmwCY6SCly3G6c", function (err, decoded) {
             if (err)
                 res.sendStatus(500);
             else {
