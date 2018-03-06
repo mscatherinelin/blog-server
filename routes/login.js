@@ -7,7 +7,7 @@ var jwt = require('jsonwebtoken');
 
 
 router.get('/', function (req, res, next) {
-    var redirect = "/";
+    var redirect = "/edit/";
     if (req.query.redirect)
         redirect = req.query.redirect;
     if (!req.query.username || !req.query.password) {
