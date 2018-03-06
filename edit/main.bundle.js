@@ -66,7 +66,7 @@ exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-b
 
 
 // module
-exports.push([module.i, "\r\n", ""]);
+exports.push([module.i, "\n", ""]);
 
 // exports
 
@@ -79,7 +79,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/app.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"wrapper\">\r\n  <nav class=\"\" id=\"sidebar\">\r\n    <app-list></app-list>\r\n  </nav>\r\n  <div id = \"content\" style=\"width:100%; padding-right: 10px;\">\r\n    <flash-messages></flash-messages>\r\n    <router-outlet></router-outlet>\r\n  </div>\r\n</div>"
+module.exports = "<div class=\"wrapper\">\n  <nav class=\"\" id=\"sidebar\">\n    <app-list></app-list>\n  </nav>\n  <div id = \"content\" style=\"width:100%; padding-right: 10px;\">\n    <flash-messages></flash-messages>\n    <router-outlet></router-outlet>\n  </div>\n</div>"
 
 /***/ }),
 
@@ -203,6 +203,7 @@ var AppModule = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_jsonwebtoken___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_jsonwebtoken__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angular2_flash_messages_module_flash_messages_service__ = __webpack_require__("../../../../angular2-flash-messages/module/flash-messages.service.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angular2_flash_messages_module_flash_messages_service___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_angular2_flash_messages_module_flash_messages_service__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__angular_router__ = __webpack_require__("../../../router/esm5/router.js");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -212,6 +213,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+
 
 
 
@@ -234,9 +236,10 @@ var updateFail = false;
 var postFail = false;
 var deleteFail = false;
 var BlogService = /** @class */ (function () {
-    function BlogService(http, flash) {
+    function BlogService(http, flash, router) {
         this.http = http;
         this.flash = flash;
+        this.router = router;
         this.posts = [];
         this.PostCount = 1;
         this.PostCountName = "#PostCount";
@@ -270,9 +273,9 @@ var BlogService = /** @class */ (function () {
         cookie = cookie.substr(cookie.indexOf("=") + 1);
         console.log(cookie);
         var decodedCookie = __WEBPACK_IMPORTED_MODULE_2_jsonwebtoken__["decode"](cookie, { complete: true });
-        console.log('Cookie Header: ' + JSON.stringify(decodedCookie.header));
-        console.log('Cookie Payload: ' + JSON.stringify(decodedCookie.payload));
-        console.log('We think username is: ' + decodedCookie.payload.usr);
+        // console.log('Cookie Header: ' + JSON.stringify(decodedCookie.header));
+        // console.log('Cookie Payload: ' + JSON.stringify(decodedCookie.payload));
+        // console.log('We think username is: ' + decodedCookie.payload.usr);
         return decodedCookie.payload.usr;
     };
     BlogService.prototype.newPost = function () {
@@ -291,8 +294,11 @@ var BlogService = /** @class */ (function () {
         this.PostCount++;
         this.http.post('http://localhost:3000/api/' + this.getUsername() + '/' + String(p.postid), body, httpOptions).
             subscribe(function (response) {
-            if (response != "200")
+            console.log(response);
+            if (response != "Created") {
                 _this.flash.show('Failed to create post', { timeout: 1000 });
+                _this.router.navigate(['http://localhost:3000/api/' + _this.getUsername()]);
+            }
         });
         ;
         return p;
@@ -302,24 +308,28 @@ var BlogService = /** @class */ (function () {
         post.modified = new Date(Date.now());
         this.http.put('http://localhost:3000/api/' + this.getUsername() + '/' + String(post.postid), post, httpOptions)
             .subscribe(function (response) {
-            if (response != "201")
+            console.log(response);
+            if (response.toString() != "OK") {
                 _this.flash.show('Failed to update post', { timeout: 1000 });
+                _this.router.navigate(['http://localhost:3000/api/' + _this.getUsername() + '/' + String(post.postid)]);
+            }
         });
-        //localStorage.setItem(this.PostBaseName +  String(post.postid), this.postToString(post));
     };
     BlogService.prototype.deletePost = function (postid) {
         var _this = this;
         this.http.delete('http://localhost:3000/api/' + this.getUsername() + '/' + String(postid))
             .subscribe(function (response) {
-            if (response != "200")
+            console.log(response.toString());
+            if (response != "OK") {
+                _this.router.navigate(['http://localhost:3000/api/' + _this.getUsername()]);
                 _this.flash.show('Failed to delete post', { timeout: 1000 });
+            }
         });
         this.posts.splice(this.posts.findIndex(function (x) { return x.postid == postid; }), 1);
-        //console.log("Size adfter: " + this.posts.length);
     };
     BlogService = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Injectable"])(),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_common_http__["a" /* HttpClient */], __WEBPACK_IMPORTED_MODULE_3_angular2_flash_messages_module_flash_messages_service__["FlashMessagesService"]])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_common_http__["a" /* HttpClient */], __WEBPACK_IMPORTED_MODULE_3_angular2_flash_messages_module_flash_messages_service__["FlashMessagesService"], __WEBPACK_IMPORTED_MODULE_4__angular_router__["b" /* Router */]])
     ], BlogService);
     return BlogService;
 }());
@@ -349,7 +359,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/edit/edit.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "\r\n<div *ngIf=\"post\">\r\n    <div class=\"card\" style=\"max-width: 50rem;\">\r\n        <div class=\"card-header\">\r\n            <h3>Edit</h3>\r\n        </div>\r\n        <div class=\"card-body\">\r\n            <div class=\"form-group\">\r\n                <label>Title</label>\r\n                <input type=\"text\" [(ngModel)]=\"post.title\" (input)=\"isSaveEnabled()\" class=\"form-control\"  placeholder=\"Title\" />\r\n            </div>\r\n            <div class=\"form-group\">\r\n                <label>Body</label>\r\n                <textarea id=\"textareabox\" class=\"form-control\" rows=\"10\" placeholder=\"Body\" required [(ngModel)]=\"post.body\"  (input)=\"isSaveEnabled()\"></textarea>\r\n            </div>\r\n            <div class=\"form-group\">\r\n                <label>Last Modified: {{ post.modified | date: 'medium' }}</label>\r\n            </div>\r\n            <button class=\"btn btn-danger btn-sm\" type=\"button\" (click)=\"delete()\">Delete</button>\r\n            <button class=\"btn btn-success btn-sm\" id=\"save\" type=\"button\" [disabled]=\"!saveEnabled\" (click)=\"save()\">Save</button>\r\n            <button class=\"btn btn-primary btn-sm\" type=\"button\" (click)=\"preview()\">Preview</button>\r\n        </div>\r\n    </div>\r\n</div>\r\n"
+module.exports = "\n<div *ngIf=\"post\">\n    <div class=\"card\" style=\"max-width: 50rem;\">\n        <div class=\"card-header\">\n            <h3>Edit</h3>\n        </div>\n        <div class=\"card-body\">\n            <div class=\"form-group\">\n                <label>Title</label>\n                <input type=\"text\" [(ngModel)]=\"post.title\" (input)=\"isSaveEnabled()\" class=\"form-control\"  placeholder=\"Title\" />\n            </div>\n            <div class=\"form-group\">\n                <label>Body</label>\n                <textarea id=\"textareabox\" class=\"form-control\" rows=\"10\" placeholder=\"Body\" required [(ngModel)]=\"post.body\"  (input)=\"isSaveEnabled()\"></textarea>\n            </div>\n            <div class=\"form-group\">\n                <label>Last Modified: {{ post.modified | date: 'medium' }}</label>\n            </div>\n            <button class=\"btn btn-danger btn-sm\" type=\"button\" (click)=\"delete()\">Delete</button>\n            <button class=\"btn btn-success btn-sm\" id=\"save\" type=\"button\" [disabled]=\"!saveEnabled\" (click)=\"save()\">Save</button>\n            <button class=\"btn btn-primary btn-sm\" type=\"button\" (click)=\"preview()\">Preview</button>\n        </div>\n    </div>\n</div>\n"
 
 /***/ }),
 
@@ -471,7 +481,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/list/list.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"card\">\r\n  <div class=\"card-body text-center\">\r\n    <button type=\"button\" class=\"btn btn-success btn-sm\" (click)=\"newPost()\">New Post</button>\r\n  </div>\r\n</div>\r\n<br />\r\n<div *ngFor=\"let post of posts\">\r\n  <h5 class=\"text-left\">\r\n    <a routerLink=\"edit/{{post.postid}}\" class=\"badge badge-info text-left\" style=\"overflow-wrap: break-word; max-width: 100%; white-space: normal; width: 100%;\">\r\n      <span class=\"badge badge-light\">{{post.created | date: 'short'}}</span>\r\n      <span style=\"overflow-wrap: break-word;\">{{post.title}}</span>\r\n    </a>\r\n  </h5>\r\n</div>"
+module.exports = "<div class=\"card\">\n  <div class=\"card-body text-center\">\n    <button type=\"button\" class=\"btn btn-success btn-sm\" (click)=\"newPost()\">New Post</button>\n  </div>\n</div>\n<br />\n<div *ngFor=\"let post of posts\">\n  <h5 class=\"text-left\">\n    <a routerLink=\"edit/{{post.postid}}\" class=\"badge badge-info text-left\" style=\"overflow-wrap: break-word; max-width: 100%; white-space: normal; width: 100%;\">\n      <span class=\"badge badge-light\">{{post.created | date: 'short'}}</span>\n      <span style=\"overflow-wrap: break-word;\">{{post.title}}</span>\n    </a>\n  </h5>\n</div>"
 
 /***/ }),
 
