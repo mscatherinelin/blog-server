@@ -66,7 +66,7 @@ exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-b
 
 
 // module
-exports.push([module.i, "\n", ""]);
+exports.push([module.i, "\r\n", ""]);
 
 // exports
 
@@ -79,7 +79,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/app.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"wrapper\">\n  <nav class=\"\" id=\"sidebar\">\n    <app-list></app-list>\n  </nav>\n  <div id = \"content\" style=\"width:100%; padding-right: 10px;\">\n    <flash-messages></flash-messages>\n    <router-outlet></router-outlet>\n  </div>\n</div>"
+module.exports = "<div class=\"wrapper\">\r\n  <nav class=\"\" id=\"sidebar\">\r\n    <app-list></app-list>\r\n  </nav>\r\n  <div id = \"content\" style=\"width:100%; padding-right: 10px;\">\r\n    <flash-messages></flash-messages>\r\n    <router-outlet></router-outlet>\r\n  </div>\r\n</div>"
 
 /***/ }),
 
@@ -229,7 +229,7 @@ var httpOptions = {
     headers: new __WEBPACK_IMPORTED_MODULE_1__angular_common_http__["c" /* HttpHeaders */]({
         'Content-Type': 'application/json'
     }),
-    withCredentials: true,
+    //withCredentials: true,
     responseType: 'text'
 };
 var updateFail = false;
@@ -290,40 +290,38 @@ var BlogService = /** @class */ (function () {
         p = this.stringToPost(this.postToString(p));
         this.posts.push(p);
         var body = JSON.stringify(p);
-        console.log(body);
+        //console.log(body);
         this.PostCount++;
         this.http.post('http://localhost:3000/api/' + this.getUsername() + '/' + String(p.postid), body, httpOptions).
             subscribe(function (response) {
-            console.log(response);
-            if (response != "Created") {
-                _this.flash.show('Failed to create post', { timeout: 1000 });
-                _this.router.navigate(['http://localhost:3000/api/' + _this.getUsername()]);
-            }
+            console.log("created");
+        }, function (err) {
+            _this.newPostError();
         });
-        ;
         return p;
+    };
+    BlogService.prototype.newPostError = function () {
+        this.posts.pop();
+        this.flash.show('Failed to create post', { timeout: 3000 });
+        this.router.navigate(['http://localhost:3000/api/' + this.getUsername()]);
     };
     BlogService.prototype.updatePost = function (post) {
         var _this = this;
         post.modified = new Date(Date.now());
         this.http.put('http://localhost:3000/api/' + this.getUsername() + '/' + String(post.postid), post, httpOptions)
             .subscribe(function (response) {
-            console.log(response);
-            if (response.toString() != "OK") {
-                _this.flash.show('Failed to update post', { timeout: 1000 });
-                _this.router.navigate(['http://localhost:3000/api/' + _this.getUsername() + '/' + String(post.postid)]);
-            }
+            console.log("Update ok.");
+        }, function (err) {
+            _this.flash.show('Failed to update post', { timeout: 3000 });
+            _this.router.navigate(['http://localhost:3000/api/' + _this.getUsername() + '/' + String(post.postid)]);
         });
     };
     BlogService.prototype.deletePost = function (postid) {
         var _this = this;
-        this.http.delete('http://localhost:3000/api/' + this.getUsername() + '/' + String(postid))
-            .subscribe(function (response) {
-            console.log(response.toString());
-            if (response != "OK") {
-                _this.router.navigate(['http://localhost:3000/api/' + _this.getUsername()]);
-                _this.flash.show('Failed to delete post', { timeout: 1000 });
-            }
+        this.http.delete('http://localhost:3000/api/' + this.getUsername() + '/' + String(postid), { responseType: 'text' })
+            .subscribe(function (response) { console.log(response); }, function (err) {
+            _this.router.navigate(['http://localhost:3000/api/' + _this.getUsername()]);
+            _this.flash.show('Failed to delete post', { timeout: 3000 });
         });
         this.posts.splice(this.posts.findIndex(function (x) { return x.postid == postid; }), 1);
     };
@@ -359,7 +357,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/edit/edit.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "\n<div *ngIf=\"post\">\n    <div class=\"card\" style=\"max-width: 50rem;\">\n        <div class=\"card-header\">\n            <h3>Edit</h3>\n        </div>\n        <div class=\"card-body\">\n            <div class=\"form-group\">\n                <label>Title</label>\n                <input type=\"text\" [(ngModel)]=\"post.title\" (input)=\"isSaveEnabled()\" class=\"form-control\"  placeholder=\"Title\" />\n            </div>\n            <div class=\"form-group\">\n                <label>Body</label>\n                <textarea id=\"textareabox\" class=\"form-control\" rows=\"10\" placeholder=\"Body\" required [(ngModel)]=\"post.body\"  (input)=\"isSaveEnabled()\"></textarea>\n            </div>\n            <div class=\"form-group\">\n                <label>Last Modified: {{ post.modified | date: 'medium' }}</label>\n            </div>\n            <button class=\"btn btn-danger btn-sm\" type=\"button\" (click)=\"delete()\">Delete</button>\n            <button class=\"btn btn-success btn-sm\" id=\"save\" type=\"button\" [disabled]=\"!saveEnabled\" (click)=\"save()\">Save</button>\n            <button class=\"btn btn-primary btn-sm\" type=\"button\" (click)=\"preview()\">Preview</button>\n        </div>\n    </div>\n</div>\n"
+module.exports = "\r\n<div *ngIf=\"post\">\r\n    <div class=\"card\" style=\"max-width: 50rem;\">\r\n        <div class=\"card-header\">\r\n            <h3>Edit</h3>\r\n        </div>\r\n        <div class=\"card-body\">\r\n            <div class=\"form-group\">\r\n                <label>Title</label>\r\n                <input type=\"text\" [(ngModel)]=\"post.title\" (input)=\"isSaveEnabled()\" class=\"form-control\"  placeholder=\"Title\" />\r\n            </div>\r\n            <div class=\"form-group\">\r\n                <label>Body</label>\r\n                <textarea id=\"textareabox\" class=\"form-control\" rows=\"10\" placeholder=\"Body\" required [(ngModel)]=\"post.body\"  (input)=\"isSaveEnabled()\"></textarea>\r\n            </div>\r\n            <div class=\"form-group\">\r\n                <label>Last Modified: {{ post.modified | date: 'medium' }}</label>\r\n            </div>\r\n            <button class=\"btn btn-danger btn-sm\" type=\"button\" (click)=\"delete()\">Delete</button>\r\n            <button class=\"btn btn-success btn-sm\" id=\"save\" type=\"button\" [disabled]=\"!saveEnabled\" (click)=\"save()\">Save</button>\r\n            <button class=\"btn btn-primary btn-sm\" type=\"button\" (click)=\"preview()\">Preview</button>\r\n        </div>\r\n    </div>\r\n</div>\r\n"
 
 /***/ }),
 
@@ -407,6 +405,8 @@ var EditComponent = /** @class */ (function () {
     EditComponent.prototype.save = function () {
         //console.log("Calling save...")
         this.blogService.updatePost(this.post);
+        this.postOriginal = JSON.parse(JSON.stringify(this.post));
+        this.isSaveEnabled();
     };
     EditComponent.prototype.delete = function () {
         this.blogService.deletePost(this.post.postid);
@@ -481,7 +481,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/list/list.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"card\">\n  <div class=\"card-body text-center\">\n    <button type=\"button\" class=\"btn btn-success btn-sm\" (click)=\"newPost()\">New Post</button>\n  </div>\n</div>\n<br />\n<div *ngFor=\"let post of posts\">\n  <h5 class=\"text-left\">\n    <a routerLink=\"edit/{{post.postid}}\" class=\"badge badge-info text-left\" style=\"overflow-wrap: break-word; max-width: 100%; white-space: normal; width: 100%;\">\n      <span class=\"badge badge-light\">{{post.created | date: 'short'}}</span>\n      <span style=\"overflow-wrap: break-word;\">{{post.title}}</span>\n    </a>\n  </h5>\n</div>"
+module.exports = "<div class=\"card\">\r\n  <div class=\"card-body text-center\">\r\n    <button type=\"button\" class=\"btn btn-success btn-sm\" (click)=\"newPost()\">New Post</button>\r\n  </div>\r\n</div>\r\n<br />\r\n<div *ngFor=\"let post of posts\">\r\n  <h5 class=\"text-left\">\r\n    <a routerLink=\"edit/{{post.postid}}\" class=\"badge badge-info text-left\" style=\"overflow-wrap: break-word; max-width: 100%; white-space: normal; width: 100%;\">\r\n      <span class=\"badge badge-light\">{{post.created | date: 'short'}}</span>\r\n      <span style=\"overflow-wrap: break-word;\">{{post.title}}</span>\r\n    </a>\r\n  </h5>\r\n</div>"
 
 /***/ }),
 
