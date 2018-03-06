@@ -600,6 +600,11 @@ var PreviewComponent = /** @class */ (function () {
         var parsed = reader.parse(this.currentPost.body);
         // transform parsed if you like...
         this.bodyHTML = writer.render(parsed); // result is a String
+        var reader2 = new __WEBPACK_IMPORTED_MODULE_1_commonmark__["Parser"]();
+        var writer2 = new __WEBPACK_IMPORTED_MODULE_1_commonmark__["HtmlRenderer"]();
+        var parsed2 = reader2.parse(this.currentPost.title);
+        // transform parsed if you like...
+        this.titleHTML = writer2.render(parsed2);
     };
     PreviewComponent.prototype.ngOnInit = function () {
         var _this = this;
