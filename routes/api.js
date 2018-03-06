@@ -8,6 +8,7 @@ var authenticateUser = function (req, res, next, then) {
     //return;
     var cookie = req.cookies.name;
     if (!cookie) {
+        console.log("No cookie present");
         res.sendStatus(401);
         return;
     }

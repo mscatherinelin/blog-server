@@ -46,7 +46,7 @@ var AppRoutingModule = /** @class */ (function () {
     function AppRoutingModule() {
     }
     AppRoutingModule = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["I" /* NgModule */])({
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["NgModule"])({
             imports: [__WEBPACK_IMPORTED_MODULE_1__angular_router__["c" /* RouterModule */].forRoot(routes, { useHash: true })],
             exports: [__WEBPACK_IMPORTED_MODULE_1__angular_router__["c" /* RouterModule */]]
         })
@@ -79,7 +79,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/app.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"wrapper\">\r\n  <nav class=\"\" id=\"sidebar\">\r\n    <app-list></app-list>\r\n  </nav>\r\n  <div id = \"content\" style=\"width:100%; padding-right: 10px;\">\r\n    <router-outlet></router-outlet>\r\n  </div>\r\n</div>"
+module.exports = "<div class=\"wrapper\">\r\n  <nav class=\"\" id=\"sidebar\">\r\n    <app-list></app-list>\r\n  </nav>\r\n  <div id = \"content\" style=\"width:100%; padding-right: 10px;\">\r\n    <flash-messages></flash-messages>\r\n    <router-outlet></router-outlet>\r\n  </div>\r\n</div>"
 
 /***/ }),
 
@@ -111,7 +111,7 @@ var AppComponent = /** @class */ (function () {
         };
     }
     AppComponent = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
             selector: 'app-root',
             template: __webpack_require__("../../../../../src/app/app.component.html"),
             styles: [__webpack_require__("../../../../../src/app/app.component.css")]
@@ -140,6 +140,9 @@ var AppComponent = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__list_list_component__ = __webpack_require__("../../../../../src/app/list/list.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__app_routing_module__ = __webpack_require__("../../../../../src/app/app-routing.module.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__preview_preview_component__ = __webpack_require__("../../../../../src/app/preview/preview.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__angular_common_http__ = __webpack_require__("../../../common/esm5/http.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11_angular2_flash_messages__ = __webpack_require__("../../../../angular2-flash-messages/module/index.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11_angular2_flash_messages___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_11_angular2_flash_messages__);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -156,11 +159,13 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
 
+
+
 var AppModule = /** @class */ (function () {
     function AppModule() {
     }
     AppModule = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["I" /* NgModule */])({
+        Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["NgModule"])({
             declarations: [
                 __WEBPACK_IMPORTED_MODULE_3__app_component__["a" /* AppComponent */],
                 __WEBPACK_IMPORTED_MODULE_5__edit_edit_component__["a" /* EditComponent */],
@@ -171,7 +176,9 @@ var AppModule = /** @class */ (function () {
                 __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__["a" /* BrowserModule */],
                 __WEBPACK_IMPORTED_MODULE_6__angular_forms__["a" /* FormsModule */],
                 __WEBPACK_IMPORTED_MODULE_2__angular_router__["c" /* RouterModule */],
-                __WEBPACK_IMPORTED_MODULE_8__app_routing_module__["a" /* AppRoutingModule */]
+                __WEBPACK_IMPORTED_MODULE_8__app_routing_module__["a" /* AppRoutingModule */],
+                __WEBPACK_IMPORTED_MODULE_10__angular_common_http__["b" /* HttpClientModule */],
+                __WEBPACK_IMPORTED_MODULE_11_angular2_flash_messages__["FlashMessagesModule"].forRoot()
             ],
             providers: [__WEBPACK_IMPORTED_MODULE_4__blog_service__["a" /* BlogService */]],
             bootstrap: [__WEBPACK_IMPORTED_MODULE_3__app_component__["a" /* AppComponent */]]
@@ -191,6 +198,11 @@ var AppModule = /** @class */ (function () {
 /* unused harmony export Post */
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return BlogService; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/esm5/core.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_common_http__ = __webpack_require__("../../../common/esm5/http.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_jsonwebtoken__ = __webpack_require__("../../../../jsonwebtoken/index.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_jsonwebtoken___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_jsonwebtoken__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angular2_flash_messages_module_flash_messages_service__ = __webpack_require__("../../../../angular2-flash-messages/module/flash-messages.service.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angular2_flash_messages_module_flash_messages_service___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_angular2_flash_messages_module_flash_messages_service__);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -201,14 +213,30 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 
+
+
+
+
 var Post = /** @class */ (function () {
     function Post() {
     }
     return Post;
 }());
 
+var httpOptions = {
+    headers: new __WEBPACK_IMPORTED_MODULE_1__angular_common_http__["c" /* HttpHeaders */]({
+        'Content-Type': 'application/json'
+    }),
+    withCredentials: true,
+    responseType: 'text'
+};
+var updateFail = false;
+var postFail = false;
+var deleteFail = false;
 var BlogService = /** @class */ (function () {
-    function BlogService() {
+    function BlogService(http, flash) {
+        this.http = http;
+        this.flash = flash;
         this.posts = [];
         this.PostCount = 1;
         this.PostCountName = "#PostCount";
@@ -221,21 +249,15 @@ var BlogService = /** @class */ (function () {
     BlogService.prototype.stringToPost = function (s) {
         return JSON.parse(s);
     };
+    BlogService.prototype.fetchPostsCallBack = function (data) {
+        var _this = this;
+        data.forEach(function (x) { return _this.posts.push(x); });
+        this.PostCount = this.posts[this.posts.length - 1].postid + 1;
+    };
     BlogService.prototype.fetchPosts = function () {
-        console.log("Fetch Called");
-        var postcount = localStorage.getItem(this.PostCountName);
-        if (postcount != null)
-            this.PostCount = Number(postcount);
-        else
-            localStorage.setItem(this.PostCountName, String(this.PostCount));
-        var i;
-        //console.log("About to loop for posts with count of:" + this.PostCount)
-        for (i = 0; i < this.PostCount; i++) {
-            //console.log("About to ask for: " + this.PostBaseName + String(i));
-            var temp = localStorage.getItem(this.PostBaseName + String(i));
-            if (temp != null)
-                this.posts.push(this.stringToPost(temp));
-        }
+        var _this = this;
+        this.http.get('http://localhost:3000/api/' + this.getUsername())
+            .subscribe(function (data) { return _this.fetchPostsCallBack(data); });
     };
     BlogService.prototype.getPosts = function () {
         return this.posts;
@@ -243,43 +265,61 @@ var BlogService = /** @class */ (function () {
     BlogService.prototype.getPost = function (id) {
         return this.posts.filter(function (x) { return x.postid == id; })[0];
     };
+    BlogService.prototype.getUsername = function () {
+        var cookie = document.cookie;
+        cookie = cookie.substr(cookie.indexOf("=") + 1);
+        console.log(cookie);
+        var decodedCookie = __WEBPACK_IMPORTED_MODULE_2_jsonwebtoken__["decode"](cookie, { complete: true });
+        console.log('Cookie Header: ' + JSON.stringify(decodedCookie.header));
+        console.log('Cookie Payload: ' + JSON.stringify(decodedCookie.payload));
+        console.log('We think username is: ' + decodedCookie.payload.usr);
+        return decodedCookie.payload.usr;
+    };
     BlogService.prototype.newPost = function () {
+        var _this = this;
         var p = new Post();
-        p.title = "";
-        p.body = "";
+        p.title = 'Title';
+        p.body = 'Body';
         p.modified = new Date(Date.now());
         p.created = new Date(Date.now());
         p.postid = this.PostCount;
         //clear time format issues
         p = this.stringToPost(this.postToString(p));
         this.posts.push(p);
-        //clean our state
-        localStorage.setItem(this.PostBaseName + String(this.PostCount), this.postToString(p));
+        var body = JSON.stringify(p);
+        console.log(body);
         this.PostCount++;
-        localStorage.setItem(this.PostCountName, String(this.PostCount));
+        this.http.post('http://localhost:3000/api/' + this.getUsername() + '/' + String(p.postid), body, httpOptions).
+            subscribe(function (response) {
+            if (response != "200")
+                _this.flash.show('Failed to create post', { timeout: 1000 });
+        });
+        ;
         return p;
     };
     BlogService.prototype.updatePost = function (post) {
-        var res = this.stringToPost(localStorage.getItem(this.PostBaseName + String(post.postid)));
-        if (res == null) {
-            //console.log("Coudln't find it in local storage");
-            return;
-        }
-        post.created = res.created;
+        var _this = this;
         post.modified = new Date(Date.now());
-        //this.posts[this.posts.findIndex(x => x.postid == post.postid)] = this.stringToPost(this.postToString(post));
-        localStorage.setItem(this.PostBaseName + String(post.postid), this.postToString(post));
+        this.http.put('http://localhost:3000/api/' + this.getUsername() + '/' + String(post.postid), post, httpOptions)
+            .subscribe(function (response) {
+            if (response != "201")
+                _this.flash.show('Failed to update post', { timeout: 1000 });
+        });
+        //localStorage.setItem(this.PostBaseName +  String(post.postid), this.postToString(post));
     };
     BlogService.prototype.deletePost = function (postid) {
-        //console.log("Calling delete")
-        localStorage.removeItem(this.PostBaseName + String(postid));
-        //console.log("Size before: " + this.posts.length);
+        var _this = this;
+        this.http.delete('http://localhost:3000/api/' + this.getUsername() + '/' + String(postid))
+            .subscribe(function (response) {
+            if (response != "200")
+                _this.flash.show('Failed to delete post', { timeout: 1000 });
+        });
         this.posts.splice(this.posts.findIndex(function (x) { return x.postid == postid; }), 1);
         //console.log("Size adfter: " + this.posts.length);
     };
     BlogService = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["A" /* Injectable */])(),
-        __metadata("design:paramtypes", [])
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Injectable"])(),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_common_http__["a" /* HttpClient */], __WEBPACK_IMPORTED_MODULE_3_angular2_flash_messages_module_flash_messages_service__["FlashMessagesService"]])
     ], BlogService);
     return BlogService;
 }());
@@ -390,13 +430,13 @@ var EditComponent = /** @class */ (function () {
         });
     };
     __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["y" /* HostListener */])('window:beforeunload'),
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["HostListener"])('window:beforeunload'),
         __metadata("design:type", Function),
         __metadata("design:paramtypes", []),
         __metadata("design:returntype", void 0)
     ], EditComponent.prototype, "saveUncommited", null);
     EditComponent = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
             selector: 'app-edit',
             template: __webpack_require__("../../../../../src/app/edit/edit.component.html"),
             styles: [__webpack_require__("../../../../../src/app/edit/edit.component.css")]
@@ -474,7 +514,7 @@ var ListComponent = /** @class */ (function () {
     ListComponent.prototype.redirect = function (id) {
     };
     ListComponent = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
             selector: 'app-list',
             template: __webpack_require__("../../../../../src/app/list/list.component.html"),
             styles: [__webpack_require__("../../../../../src/app/list/list.component.css")]
@@ -558,7 +598,7 @@ var PreviewComponent = /** @class */ (function () {
         });
     };
     PreviewComponent = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
             selector: 'app-preview',
             template: __webpack_require__("../../../../../src/app/preview/preview.component.html"),
             styles: [__webpack_require__("../../../../../src/app/preview/preview.component.css")]
@@ -602,7 +642,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 if (__WEBPACK_IMPORTED_MODULE_3__environments_environment__["a" /* environment */].production) {
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_13" /* enableProdMode */])();
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["enableProdMode"])();
 }
 Object(__WEBPACK_IMPORTED_MODULE_1__angular_platform_browser_dynamic__["a" /* platformBrowserDynamic */])().bootstrapModule(__WEBPACK_IMPORTED_MODULE_2__app_app_module__["a" /* AppModule */])
     .catch(function (err) { return console.log(err); });
@@ -615,6 +655,13 @@ Object(__WEBPACK_IMPORTED_MODULE_1__angular_platform_browser_dynamic__["a" /* pl
 
 module.exports = __webpack_require__("../../../../../src/main.ts");
 
+
+/***/ }),
+
+/***/ 1:
+/***/ (function(module, exports) {
+
+/* (ignored) */
 
 /***/ })
 
