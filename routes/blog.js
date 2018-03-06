@@ -16,6 +16,11 @@ router.get('/:username', function (req, res, next) {
         .then(data => {
             var sortedData = data.sort((a, b) => a.postid - b.postid).filter(x => x.postid >= startIndex);
             sortedData.forEach(e => {
+                var reader2 = new commonmark.Parser();
+                var writer2 = new commonmark.HtmlRenderer();
+                var parsed2 = reader.parse(e.title);
+                e.title = reader.parse(parsed2);
+
                 var reader = new commonmark.Parser();
                 var writer = new commonmark.HtmlRenderer();
                 var parsed = reader.parse(e.body);
@@ -39,6 +44,12 @@ router.get('/:username', function (req, res, next) {
 router.get('/:username/:postid', function (req, res, next) {
     db.postByUserNameAndPostId(req.params.username, parseInt(req.params.postid))
         .then(data => {
+
+            var reader2 = new commonmark.Parser();
+            var writer2 = new commonmark.HtmlRenderer();
+            var parsed2 = reader.parse(data.title);
+            data.title = reader.parse(parsed2);
+
             var reader = new commonmark.Parser();
             var writer = new commonmark.HtmlRenderer();
             var parsed = reader.parse(data.body);
