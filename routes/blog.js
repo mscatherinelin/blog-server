@@ -18,8 +18,8 @@ router.get('/:username', function (req, res, next) {
             sortedData.forEach(e => {
                 var reader2 = new commonmark.Parser();
                 var writer2 = new commonmark.HtmlRenderer();
-                var parsed2 = reader.parse(e.title);
-                e.title = reader.parse(parsed2);
+                var parsed2 = reader2.parse(e.title);
+                e.title = writer2.render(parsed2);
 
                 var reader = new commonmark.Parser();
                 var writer = new commonmark.HtmlRenderer();
@@ -47,8 +47,8 @@ router.get('/:username/:postid', function (req, res, next) {
 
             var reader2 = new commonmark.Parser();
             var writer2 = new commonmark.HtmlRenderer();
-            var parsed2 = reader.parse(data.title);
-            data.title = reader.parse(parsed2);
+            var parsed2 = reader2.parse(data.title);
+            data.title = writer2.render(parsed2);
 
             var reader = new commonmark.Parser();
             var writer = new commonmark.HtmlRenderer();
