@@ -6,7 +6,7 @@ var jwt = require('jsonwebtoken');
 var authenticateUser = function (req, res, next, then) {
     // then();
     // return;
-    var cookie = req.cookies.name;
+    var cookie = req.cookies.jwt;
     if (!cookie) {
         console.log("No cookie present");
         res.sendStatus(401);

@@ -39,7 +39,7 @@ router.get('/', function (req, res, next) {
                         }
                     );
                     console.log("Login Success...");
-                    res.cookie('name', token);
+                    res.cookie('jwt', token);
                     if (req.query.redirect) {
                         res.redirect(req.query.redirect);
                         return;

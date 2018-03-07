@@ -3,7 +3,7 @@ var path = require('path');
 var jwt = require('jsonwebtoken');
 var router = express.Router();
 var authenticateUser = function (req, res, next, then) {
-    var cookie = req.cookies.name;
+    var cookie = req.cookies.jwt;
     if (!cookie) {
         res.redirect('/login?redirect=/edit/');
         return;
